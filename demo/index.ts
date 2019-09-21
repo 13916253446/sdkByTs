@@ -1,5 +1,6 @@
 interface IPerson {
-  name: string
+  name: string,
+  age: number
 }
 
 const obj: IPerson = {

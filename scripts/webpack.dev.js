@@ -1,9 +1,9 @@
 const webpack = require('webpack')
 const webpackMerge = require('webpack-merge')
 const DotEnv = require('dotenv-webpack')
-const friendlyErrorPlugin = require('friendly-errors-webpack-plugin')
-const errorOverlayWebpackPlugin = require('error-overlay-webpack-plugin')
-const webpackbar = require('webpackbar')
+const FriendlyErrorPlugin = require('friendly-errors-webpack-plugin')
+const ErrorOverlayWebpackPlugin = require('error-overlay-webpack-plugin')
+const Webpackbar = require('webpackbar')
 const address = require('address')
 const webpackBaseConfig = require('./webpack.base.js')
 const path = require('path')
@@ -23,14 +23,14 @@ const webpackConfig = {
       errors: true
     },
     contentBase: devConfig.assetsRoot,
-    quiet: false,
+    quiet: true,
     hotOnly: true
   },
   plugins: [
     new DotEnv({
       path: path.resolve(__dirname, '../.env.development')
     }),
-    new friendlyErrorPlugin({
+    new FriendlyErrorPlugin({
       compilationSuccessInfo: {
         messages: [`You application is running here http://${address.ip()}:${devConfig.serverPort}`]
       },
@@ -41,8 +41,8 @@ const webpackConfig = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new errorOverlayWebpackPlugin(),
-    new webpackbar(),
+    new ErrorOverlayWebpackPlugin(),
+    new Webpackbar()
   ]
 }
 

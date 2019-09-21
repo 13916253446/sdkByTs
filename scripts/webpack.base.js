@@ -1,10 +1,10 @@
-const htmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+/* const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin') */
 const path = require('path')
 const { noParse, stats, alias } = require('./config.js')
 
 const babelLoader = {
   loader: 'babel-loader',
-  exclude: [/node_modules/],
   options: {
     cacheDirectory: true,
     cacheIdentifier: 1
@@ -16,7 +16,7 @@ const tsLoader = {
     {
       loader: 'ts-loader',
       options: {
-        transpileOnly: true,
+        /* transpileOnly: true, */
         appendTsSuffixTo: ['\\.vue$'],
         happyPackMode: false
       }
@@ -32,18 +32,22 @@ const webpackConfig = {
     noParse,
     rules: [
       {
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        options: {
+          formatter: require('eslint-friendly-formatter')
+        }
+      },
+      {
         test: /\.js$/,
         loader: 'source-map-loader',
         enforce: 'pre'
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
         exclude: [/node_modules/],
-        options: {
-          cacheDirectory: true,
-          cacheIdentifier: 1
-        }
+        ...babelLoader
       },
       {
         test: /\.ts$/,
@@ -66,16 +70,17 @@ const webpackConfig = {
             image: 'xlink:href'
           }
         }
-      },
+      }
     ]
   },
   plugins: [
-    new htmlWebpackPlugin({
+    new HtmlWebpackPlugin({
       chunksSortMode: 'none',
       template: path.resolve(__dirname, '../demo/index.html'),
       filename: 'index.html',
       inject: true
     })
+    /* new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true }) */
   ],
   node: {
     setImmediate: false,
