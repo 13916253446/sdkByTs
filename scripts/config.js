@@ -44,11 +44,11 @@ module.exports = {
   noParse: /^(vue|vue-router|vuex|axios)$/,
   development: {
     cssSourceMap: false,
-    assetsRoot: pathResolve('../dist'),
+    assetsRoot: path.resolve(__dirname, '../dist'),
     serverPort: 9988
   },
   production: {
-    assetsRoot: pathResolve('../dist'),
+    assetsRoot: path.resolve(__dirname, '../dist'),
     publicPath: ''
   }
 }

@@ -1,17 +1,33 @@
 const htmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
-const { noParse } = require('./config.js')
+const { noParse, stats, alias } = require('./config.js')
 
-const tsLoader = {
-  loader: 'babel-loader!ts-loader',
+const babelLoader = {
+  loader: 'babel-loader',
+  exclude: [/node_modules/],
   options: {
-    transpileOnly: true,
-    appendTsSuffixTo: ['\\.vue$'],
-    happyPackMode: false
+    cacheDirectory: true,
+    cacheIdentifier: 1
   }
+}
+const tsLoader = {
+  loaders: [
+    babelLoader,
+    {
+      loader: 'ts-loader',
+      options: {
+        transpileOnly: true,
+        appendTsSuffixTo: ['\\.vue$'],
+        happyPackMode: false
+      }
+    }
+  ]
 }
 
 const webpackConfig = {
+  resolveLoader: {
+    modules: [path.resolve(__dirname, '../node_modules')]
+  },
   module: {
     noParse,
     rules: [
@@ -60,7 +76,21 @@ const webpackConfig = {
       filename: 'index.html',
       inject: true
     })
-  ]
+  ],
+  node: {
+    setImmediate: false,
+    dgram: 'empty',
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty'
+  },
+  stats,
+  resolve: {
+    symlinks: true,
+    extensions: ['.ts', '.js', '.vue', '.mjs'],
+    alias
+  }
 }
 
 module.exports = webpackConfig
