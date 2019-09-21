@@ -1,0 +1,29 @@
+{
+  "name": "sdkByTs",
+  "version": "1.0.0",
+  "description": "ts开发sdk",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/13916253446/sdkByTs.git"
+  },
+  "keywords": [],
+  "author": "崔海峰",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/13916253446/sdkByTs/issues"
+  },
+  "homepage": "https://github.com/13916253446/sdkByTs#readme",
+  "devDependencies": {
+    "cross-env": "^6.0.0",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^6.1.1",
+    "typescript": "^3.6.3",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1"
+  }
+}
